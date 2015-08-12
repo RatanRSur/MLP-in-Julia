@@ -66,16 +66,16 @@ function promptUser()
         train = open(trainName)
         output = open(outputName, "w")
 
-        return [init,train,output]
+        return init, train, output, nepochs, alpha
 end
 
 stod(str::String) = convert(Float64,parse(str))
 
 line2Arr(str::String) = [stod(x) for x in split(str)]
 
-function loadParams(init)
+function loadInit(init)
         initLines=readlines(init)
-        (ni, nh, no) = [int(x) for x in split(initLines[1])]
+        (ni, nh, no) = int(split(initLines[1]))
         Theta1 = zeros(nh,ni+1)
         for i=1:nh
                 Theta1[i,:] = line2Arr(initLines[1+i])
@@ -85,5 +85,17 @@ function loadParams(init)
                 Theta2[i,:] = line2Arr(initLines[1+nh+i])
         end
 
-        return {ni, nh, no, Theta1, Theta2}
+        return ni, nh, no, Theta1, Theta2
+end
+
+function loadTrain(train)
+        trainlines=readlines(train)
+        (m, ni, no) = int(split(trainLines[1]))
+        X = zeros(m, ni)
+        y = zeros(m, no)
+        for i=1:m
+               X[i,:] = split(trainLines[1+i])[1:ni]
+               y[i,:] = split(trainLines[1+i])[ni+1:end]
+        end
+        return X, y
 end
