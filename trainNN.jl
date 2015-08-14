@@ -6,7 +6,11 @@ include("saveNN.jl")
 (ni, nh, no, Theta1, Theta2) = loadInit(init)
 ( X, y) = loadTrain(train)
 
-while nepochs
+while nepochs>0
         (Theta1, Theta2) = gradientDescent(costFunction, Theta1, Theta2, X, y, alpha)
         nepochs -= 1
 end
+
+write(output, "$ni $nh $no\n")
+writeThetas(output, Theta1, Theta2)
+close(output)

@@ -20,9 +20,9 @@ function costFunction(Theta1, Theta2, X, y)
         Delta1=zeros(size(Theta1))
         Delta2=zeros(size(Theta2))
         for i=1:m
-                d3 = a3 - y[i,:]'
-                Delta2 += d3 * a2[i,:]
-                d2 = Theta2' * d3 .* sigprime(z2[i,:]')
+                d3 = a3[i,:]- y[i,:] #row
+                Delta2 += d3' * a2[i,:]
+                d2 = Theta2'[2:end,:] * d3' .* sigprime(z2[i,:]')
                 Delta1 += d2 * a1[i,:]
         end
         Delta1 ./= m

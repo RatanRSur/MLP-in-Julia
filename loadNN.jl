@@ -69,11 +69,11 @@ function promptUser()
         return init, train, output, nepochs, alpha
 end
 
-stod(str::String) = convert(Float64,parse(str))
+stod(str::String) = convert(Float64,parse(str))::Float64
 
-line2Arr(str::String) = [stod(x) for x in split(str)]
+line2Arr(str::String) = [stod(x) for x in split(str::String)]::Array{Float64}
 
-function loadInit(init)
+function loadInit(init::IO)
         initLines=readlines(init)
         (ni, nh, no) = int(split(initLines[1]))
         Theta1 = zeros(nh,ni+1)
@@ -88,14 +88,14 @@ function loadInit(init)
         return ni, nh, no, Theta1, Theta2
 end
 
-function loadTrain(train)
-        trainlines=readlines(train)
+function loadTrain(train::IO)
+        trainLines=readlines(train)
         (m, ni, no) = int(split(trainLines[1]))
         X = zeros(m, ni)
         y = zeros(m, no)
         for i=1:m
-               X[i,:] = split(trainLines[1+i])[1:ni]
-               y[i,:] = split(trainLines[1+i])[ni+1:end]
+               X[i,:] = line2Arr(trainLines[1+i])[1:ni]
+               y[i,:] = line2Arr(trainLines[1+i])[ni+1:end]
         end
         return X, y
 end
