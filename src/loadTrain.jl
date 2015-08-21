@@ -57,7 +57,7 @@ function promptTrain()
                 nepochs = parsedArgs["e"]
         end
 
-        # if parsedArgs["a"] == nothing
+        if parsedArgs["a"] == nothing
                 println("Learning rate, alpha:")
                 alpha = double(readline(STDIN))
         else
@@ -72,14 +72,3 @@ function promptTrain()
 end
 
 
-function loadTrainingData(train::IO)
-        trainLines=readlines(train)
-        (m, ni, no) = int(split(trainLines[1]))
-        X = zeros(m, ni)
-        y = zeros(m, no)
-        for i=1:m
-               X[i,:] = line2Arr(trainLines[1+i])[1:ni]
-               y[i,:] = line2Arr(trainLines[1+i])[ni+1:end]
-        end
-        return X, y
-end

@@ -10,7 +10,7 @@ function parseTest()
                         help = "init file"
                         required = false
                 "test"
-                        help = "train file"
+                        help = "test file"
                         required = false
                 "output"
                         help = "output file"
@@ -48,9 +48,5 @@ function promptTest()
         test = open(testName)
         output = open(outputName, "w")
 
-        return init, test, output, nepochs, alpha
+        return init, test, output
 end
-
-stod(str::String) = convert(Float64,parse(str))::Float64
-
-line2Arr(str::String) = [stod(x) for x in split(str::String)]::Array{Float64}
